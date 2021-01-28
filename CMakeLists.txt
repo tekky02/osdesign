@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.10...3.19)
+
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
+  message(FATAL_ERROR "in-source build is not allowed!!!\nplease build the project in some directory like 'build'")
+endif()
+
+project(osdesign VERSION 0.1 LANGUAGES C CXX)
+
+option(BUILD_COPIER CACHE ON)
+option(BUILD_UNIT_TEST CACHE ON)
+
+
+if(BUILD_COPIER)
+  add_subdirectory(copier)
+endif()
+
+if(BUILD_UNIT_TEST)
+  add_subdirectory(extern/googletest)
+  add_subdirectory(test)
+endif()
+
+
