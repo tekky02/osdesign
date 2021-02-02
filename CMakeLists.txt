@@ -7,11 +7,11 @@ endif()
 project(osdesign VERSION 0.1 LANGUAGES C CXX)
 
 option(BUILD_COPIER CACHE ON)
-option(BUILD_UNIT_TEST CACHE ON)
+option(BUILD_UNIT_TEST CACHE OFF)
 
 
 if(BUILD_COPIER)
-  add_subdirectory(copier)
+  add_subdirectory(src/copier)
 endif()
 
 if(BUILD_UNIT_TEST)

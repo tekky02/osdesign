@@ -18,8 +18,6 @@ typedef enum {
 #ifdef __cplusplus
 extern "C" {
 #endif
-// check if provided arguments are valid.
-bool args_validation(const char *argv[], int argc);
 
 // print help information.
 void print_help();
@@ -27,16 +25,15 @@ void print_help();
 // report error message in detail.
 void report_error(const char *argv[], int argc, error_type type);
 
+// copier's interface.
+void copy(const char *src, const char *dest);
+
 // copy the content of scrfd to destfd.
-void copy(int srcfd, int destfd);
+void copy_content(int srcfd, int destfd);
 
 // create destination file descriptor.
 // will create destination file and return its fd.
-int open_dest();
-
-bool is_regular_file(mode_t mode);
-
-bool is_symbol_link(mode_t mode);
+void open_dest();
 
 #ifdef __cplusplus
 }
