@@ -25,4 +25,5 @@ target_include_directories(copy PRIVATE
 						   )
 target_link_libraries(copy PRIVATE copier)
 
-install(TARGETS copy DESTINATION "${CMAKE_BINARY_DIR}/bin")
+install(TARGETS copy 
+		RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")

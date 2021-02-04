@@ -9,13 +9,14 @@ project(osdesign VERSION 0.1 LANGUAGES C CXX)
 option(BUILD_COPIER CACHE ON)
 option(BUILD_UNIT_TEST CACHE OFF)
 
+include(GNUInstallDirs)
 
 if(BUILD_COPIER)
   add_subdirectory(src/copier)
 endif()
 
 if(BUILD_UNIT_TEST)
-  add_subdirectory(extern/googletest)
+  add_subdirectory(extern/googletest EXLUDE_FROM_ALL)
   add_subdirectory(test)
 endif()
 
