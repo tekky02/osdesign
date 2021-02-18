@@ -20,20 +20,22 @@ extern "C" {
 #endif
 
 // wrapper provided for client
-void run_process(int argc, const char *argv[]);
+void copy(int argc, const char *argv[]);
 
 // check if provided arguments is valid
 void arg_check(int argc, const char *argv[]);
 
-// copier's interface.
-void copy(const char *src, const char *dest);
-
 // copy the content of scrfd to destfd.
-void copy_content(int srcfd, int destfd);
+void copy_content(const char *src, const char *dest);
 
-// create destination file descriptor.
-// will create destination file and return its fd.
-void open_dest();
+// function for src is a regular file.
+void copy_regular_file(const char *src, const char *dest);
+
+// function for src is a directory.
+// @brief if dest is a directory, then copy `src/file1` to `dest/src/file1`,
+// jump 0. if there is no dest, copy folder `src` to `dest`, for example,
+// `src/file1` -> `dest/file1`, jump `src`.
+void copy_directory(const char *src, const char *dest, size_t jump);
 
 #ifdef __cplusplus
 }

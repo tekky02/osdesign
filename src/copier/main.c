@@ -6,4 +6,4 @@
 
 #include "copier/copier.h"
 
-int main(const int argc, const char *argv[]) { run_process(argc, argv); }
+int main(const int argc, const char *argv[]) { copy(argc, argv); }
