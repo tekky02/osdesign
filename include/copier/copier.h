@@ -19,11 +19,11 @@ typedef enum {
 extern "C" {
 #endif
 
-// print help information.
-void print_help();
+// wrapper provided for client
+void run_process(int argc, const char *argv[]);
 
-// report error message in detail.
-void report_error(const char *argv[], int argc, error_type type);
+// check if provided arguments is valid
+void arg_check(int argc, const char *argv[]);
 
 // copier's interface.
 void copy(const char *src, const char *dest);

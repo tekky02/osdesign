@@ -11,7 +11,7 @@ set(CMAKE_C_CLANG_TIDY
 if(NOT DEFINED CMAKE_BUILD_TYPE OR ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"))
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ggdb -g -fno-omit-frame-pointer")
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Werror")
 endif()
 
 add_library(copier copier.c)
@@ -26,4 +26,5 @@ target_include_directories(copy PRIVATE
 target_link_libraries(copy PRIVATE copier)
 
 install(TARGETS copy 
-		RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
+        RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
+

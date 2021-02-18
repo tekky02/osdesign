@@ -20,4 +20,3 @@ if(BUILD_UNIT_TEST)
   add_subdirectory(test)
 endif()
 
-
