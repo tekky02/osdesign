@@ -1,0 +1,2 @@
+// arch/x86/../syscall_64.tbl.
+333 64 hello_world sys_hello_world
