@@ -1,5 +1,4 @@
 // created by tekky on 2021.2.18.
-// © tekky all rights reserved.
 // test for new system call (333)hello_world.
 
 #include <stdio.h>

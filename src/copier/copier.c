@@ -1,6 +1,5 @@
 // file copier.c.
 // created by tekky on 2021.1.27.
-// © tekky all rights reserved.
 
 #include <dirent.h>
 #include <errno.h>

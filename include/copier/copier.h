@@ -1,6 +1,5 @@
 // file copier.h.
 // created by tekky on 2021.1.27.
-// © tekky all rights reserved.
 
 #ifndef __COPIER_H__
 #define __COPIER_H__
