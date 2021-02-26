@@ -1,6 +1,6 @@
 // mainwindow.hh.
 // created by tekky on 2021.2.20.
-// Copyright 2021 tekky.
+// Copyright © 2021 tekky. All rights reserved.
 
 #ifndef __QMONITOR_MAINWINDOW_HH__
 #define __QMONITOR_MAINWINDOW_HH__

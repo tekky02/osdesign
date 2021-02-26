@@ -1,6 +1,6 @@
 // mainwindow.cc.
 // created by tekky on 2021.2.20.
-// Copyright(c) 2021 tekky.
+// Copyright © 2021 tekky.
 
 #include "qmonitor/mainwindow.hh"
 

@@ -1,8 +1,6 @@
 // file main.c.
 // created by tekky on 2021.1.28.
-
-#include <stdio.h>
-#include <stdlib.h>
+// Copyright © 2021 tekky. All rights reserved.
 
 #include "copier/copier.h"
 

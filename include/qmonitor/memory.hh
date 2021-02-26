@@ -1,5 +1,5 @@
 // created by tekky on 2021.2.20.
-// Copyright(c) 2021 tekky.
+// Copyright © 2021 tekky. All rights reserved.
 // memory.hh.
 
 #ifndef __QMONITOR_MEMORY_HH__

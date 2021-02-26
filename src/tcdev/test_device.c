@@ -1,5 +1,5 @@
 // created by tekky on 2021.2.19.
-// Copyright(c) 2021 tekky.
+// Copyright © 2021 tekky.
 
 #include <fcntl.h>
 #include <stdio.h>
