@@ -9,4 +9,3 @@ int main() {
   printf("result of syscall(333) = %ld.\n", res);
   return 0;
 }
-
