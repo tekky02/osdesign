@@ -5,15 +5,15 @@
 #ifndef __QVIEWER_MAINWINDOW_HH__
 #define __QVIEWER_MAINWINDOW_HH__
 
-#include <QWidget>
 #include <QProcess>
 #include <QPushButton>
+#include <QWidget>
 
 class MainWindow : public QWidget {
   Q_OBJECT
 
 public:
-  explicit MainWindow(const char* name, QWidget *parent = nullptr);
+  explicit MainWindow(const char *name, QWidget *parent = nullptr);
   ~MainWindow();
   void add_push_button() noexcept;
 
@@ -26,8 +26,8 @@ private slots:
   void on_quit_button_clicked() noexcept;
 
 private:
-  QProcess    *child1_;
-  QProcess    *child2_;
+  QProcess *child1_;
+  QProcess *child2_;
   QPushButton *run_button_;
   QPushButton *quit_button_;
 };
