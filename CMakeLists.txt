@@ -1,22 +1,28 @@
 cmake_minimum_required(VERSION 3.10...3.19)
 
-if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
-  message(FATAL_ERROR "in-source build is not allowed!!!\nplease build the project in some directory like 'build'")
-endif()
+project(qviewer VERSION 0.1 LANGUAGES CXX)
 
-project(osdesign VERSION 0.1 LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-option(BUILD_COPIER CACHE ON)
-option(BUILD_UNIT_TEST CACHE OFF)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
-include(GNUInstallDirs)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-if(BUILD_COPIER)
-  add_subdirectory(src/copier)
-endif()
+configure_file(${CMAKE_SOURCE_DIR}/sample.png ${CMAKE_BINARY_DIR}/sample.png COPYONLY)
 
-if(BUILD_UNIT_TEST)
-  add_subdirectory(extern/googletest EXLUDE_FROM_ALL)
-  add_subdirectory(test)
-endif()
+list(APPEND CXX_SOURCES
+     main.cc
+     mainwindow.cc
+     mainwindow.hh)
+
+add_executable(${PROJECT_NAME} ${CXX_SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include")
+target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Widgets)
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
+install(FILES ${CMAKE_SOURCE_DIR}/sample.png DESTINATION "${CMAKE_BINARY_DIR}/bin")
 
