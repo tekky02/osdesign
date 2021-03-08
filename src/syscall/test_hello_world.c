@@ -1,6 +1,7 @@
-// test for new system call hello_world.
+// test_hell_world.c.
 // created by tekky on 2021.2.18.
 // Copyright © 2021 tekky. All rights reserved.
+// test for new system call hello_world.
 
 #include <linux/kernel.h>
 #include <stdio.h>

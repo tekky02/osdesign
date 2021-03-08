@@ -22,13 +22,13 @@ add_executable(bufferwindow
                bufferwindow.cc
                ${CMAKE_SOURCE_DIR}/include/qtviewer/bufferwindow.hh)
 
-add_executable(sourcewindow
-               sourcewindow.cc
-               ${CMAKE_SOURCE_DIR}/include/qtviewer/sourcewindow.hh)
+add_executable(imagewindow
+               imagewindow.cc
+               ${CMAKE_SOURCE_DIR}/include/qtviewer/imagewindow.hh)
 
-add_executable(destwindow
-               destwindow.cc
-               ${CMAKE_SOURCE_DIR}/include/qtviewer/destwindow.hh)
+add_executable(timewindow
+               timewindow.cc
+               ${CMAKE_SOURCE_DIR}/include/qtviewer/timewindow.hh)
 
 
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include")
@@ -37,14 +37,14 @@ target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Widgets)
 target_include_directories(bufferwindow PRIVATE "${CMAKE_SOURCE_DIR}/include")
 target_link_libraries(bufferwindow PRIVATE Qt5::Widgets)
 
-target_include_directories(sourcewindow PRIVATE "${CMAKE_SOURCE_DIR}/include")
-target_link_libraries(sourcewindow PRIVATE Qt5::Widgets)
+target_include_directories(imagewindow PRIVATE "${CMAKE_SOURCE_DIR}/include")
+target_link_libraries(imagewindow PRIVATE Qt5::Widgets)
 
-target_include_directories(destwindow PRIVATE "${CMAKE_SOURCE_DIR}/include")
-target_link_libraries(destwindow PRIVATE Qt5::Widgets)
+target_include_directories(timewindow PRIVATE "${CMAKE_SOURCE_DIR}/include")
+target_link_libraries(timewindow PRIVATE Qt5::Widgets)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
-install(TARGETS sourcewindow RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
+install(TARGETS imagewindow RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
 install(TARGETS bufferwindow RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
-install(TARGETS destwindow   RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
+install(TARGETS timewindow   RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
 

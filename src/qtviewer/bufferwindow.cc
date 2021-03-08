@@ -4,10 +4,6 @@
 
 #include "qtviewer/bufferwindow.hh"
 
-#include <chrono>
-#include <iostream>
-#include <thread>
-
 #include <QApplication>
 #include <QBuffer>
 #include <QDebug>
@@ -40,20 +36,10 @@ void BufferWindow::copy_from_shared_memory() {
     return;
   }
 
-  QBuffer buffer;
-  QTextStream in{&buffer};
-  char ch;
-  QString content;
-
   shared_memory_.lock();
-  buffer.setData((char *)shared_memory_.constData(), shared_memory_.size());
-  buffer.open(QBuffer::ReadOnly);
-  while (!in.atEnd()) {
-    in >> content;
-    text_->setText(content);
-    qDebug() << content << "\n";
-  }
+  const char *message = (char *)shared_memory_.constData();
   shared_memory_.unlock();
+  text_->setText(message);
   shared_memory_.detach();
 }
 

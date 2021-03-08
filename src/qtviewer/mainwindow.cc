@@ -16,17 +16,17 @@
 #include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent), shared_memory_("QtViewer") {
+    : QWidget{parent}, memory_attached_{false}, shared_memory_{"QtViewer"} {
   this->setWindowTitle("qtviewer");
 
   QStringList arguments;
 
   auto layout = new QGridLayout(this);
 
-  run_button_ = new QPushButton("&Run", this);
-  layout->addWidget(run_button_, 0, 0);
-  connect(run_button_, &QPushButton::clicked, this,
-          &MainWindow::on_run_button_clicked);
+  send_button_ = new QPushButton("&Send", this);
+  layout->addWidget(send_button_, 0, 0);
+  connect(send_button_, &QPushButton::clicked, this,
+          &MainWindow::on_send_button_clicked);
 
   quit_button_ = new QPushButton("&Quit", this);
   layout->addWidget(quit_button_, 1, 0);
@@ -34,73 +34,69 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::on_quit_button_clicked);
 
   text_ = new QTextEdit(this);
+  // text_->setReadOnly(true);
   layout->addWidget(text_, 0, 1);
 
-  // source_ = new QProcess(this);
-  // source_->start("./sourcewindow", arguments);
+  image_viewer_ = new QProcess(this);
+  image_viewer_->start("./imagewindow", arguments);
 
   buffer_ = new QProcess(this);
   buffer_->start("./bufferwindow", arguments);
 
-  destination_ = new QProcess(this);
-  destination_->start("./destwindow", arguments);
+  time_viewer_ = new QProcess(this);
+  time_viewer_->start("./timewindow", arguments);
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() { detach_shared_memory(); }
 
-void MainWindow::on_run_button_clicked() noexcept {
-  auto fileName = QFileDialog::getOpenFileName(this, tr("Open Text"), "/home",
-                                               tr("Text Files (*.txt)"));
-  // hide current window.
-  // this->setVisible(false); // FIXME: fix exit bug
-  QFile file{fileName};
-  if (!file.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(this, tr("error"),
-                          tr("Unable to open file %1.").arg(fileName));
-    close();
-    return;
-  }
+void MainWindow::on_send_button_clicked() noexcept {
+  auto message = text_->toPlainText();
+  auto data = message.toLocal8Bit();
+  int size = data.size();
 
-  QBuffer buffer;
-  buffer.open(QBuffer::ReadWrite);
-
-  QDataStream out{&buffer};
-
-  // read content of the opened file, write to sourcewindow
-  QTextStream in{&file};
-  QString str;
-  while (!in.atEnd()) {
-    str = in.readLine();
-    std::cout << "[cout]: " << str.toUtf8().constData() << std::endl;
-    out << str << "\n";
-  }
-
-  int size = buffer.size();
-  if (!shared_memory_.create(size)) {
-    QMessageBox::critical(this, tr("mainwindow"),
-                          tr("Unable to create shared memory"));
-    on_quit_button_clicked();
-  }
+  // try to create shared memory while run button clicked the first time.
+  create_shared_memory();
 
   shared_memory_.lock();
   char *to = (char *)shared_memory_.data();
-  const char *from = buffer.data().data();
+  const char *from = data.data();
   memcpy(to, from, qMin(shared_memory_.size(), size));
   shared_memory_.unlock();
-
-  buffer.close();
 }
 
 void MainWindow::on_quit_button_clicked() noexcept {
-  // source_->terminate();
+  // terminate all child process before quit.
   buffer_->terminate();
-  destination_->terminate();
+  time_viewer_->terminate();
+  image_viewer_->terminate();
 
   this->close();
 }
 
-void MainWindow::detach() {
-  if (!shared_memory_.detach()) {
-    std::cerr << "error while detach shared memory\n";
+void MainWindow::create_shared_memory() noexcept {
+  if (memory_attached_) {
+    return;
   }
+
+  // create shared memory
+  if (!shared_memory_.create(shared_memory_size_)) {
+    QMessageBox::critical(this, tr("error"),
+                          tr("Unable to create shared memory"));
+    on_quit_button_clicked();
+  }
+  memory_attached_ = true;
+}
+
+void MainWindow::detach_shared_memory() noexcept {
+  if (!memory_attached_) {
+    return;
+  }
+
+  // detach shared memory
+  if (!shared_memory_.detach()) {
+    QMessageBox::critical(this, tr("error"),
+                          tr("Error while try to detach shared memory"));
+    on_quit_button_clicked();
+  }
+  memory_attached_ = false;
 }

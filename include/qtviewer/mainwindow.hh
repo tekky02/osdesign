@@ -20,19 +20,24 @@ public:
   ~MainWindow();
 
 private:
-  void detach();
+  void detach_shared_memory() noexcept;
+  void create_shared_memory() noexcept;
 
 public slots:
-  void on_run_button_clicked() noexcept;
+  void on_send_button_clicked() noexcept;
   void on_quit_button_clicked() noexcept;
 
 private:
-  // QProcess *source_;
+  static constexpr size_t shared_memory_size_ = 1024;
+
+private:
+  bool memory_attached_;
   QSharedMemory shared_memory_;
   QTextEdit *text_;
   QProcess *buffer_;
-  QProcess *destination_;
-  QPushButton *run_button_;
+  QProcess *image_viewer_;
+  QProcess *time_viewer_;
+  QPushButton *send_button_;
   QPushButton *quit_button_;
 };
 

@@ -1,5 +1,6 @@
+// test_device.c.
 // created by tekky on 2021.2.19.
-// Copyright © 2021 tekky.
+// Copyright © 2021 tekky. All rights reserved.
 
 #include <fcntl.h>
 #include <stdio.h>
