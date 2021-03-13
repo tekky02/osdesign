@@ -1,27 +1,28 @@
+// system.hh.
 // created by tekky on 2021.2.20.
 // Copyright © 2021 tekky. All rights reserved.
-// system.hh
 
 #ifndef __QMONITOR_SYSTEM_HH__
 #define __QMONITOR_SYSTEM_HH__
 
-class SystemInfo {
+#include <QWidget>
+#include <memory>
+
+#include "qmonitor/basic.hh"
+
+class SystemInfo : public QWidget {
+  Q_OBJECT
+
 public:
-  SystemInfo();
+  explicit SystemInfo(QWidget *parent = nullptr);
   ~SystemInfo();
-  void loadInfo(); // load information from /proc
 
 private:
-  QString os_name_;
-  QString kernel_name_;
-  QString kernel_release_;
-  QString kernel_version_;
-  QString host_name_;
-  QString user_name_;
-  QString cpu_name_;
-  QString memory_size_;
-  QTime   uptime_;
+  void parse_info_from_proc(); // load information from /proc
+  void display_information() noexcept;
+
+private:
+  std::unique_ptr<BasicInfo> basic_info_;
 };
 
 #endif // __QMONITOR_SYSTEM_HH__
-

@@ -29,13 +29,13 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::on_send_button_clicked);
 
   quit_button_ = new QPushButton("&Quit", this);
-  layout->addWidget(quit_button_, 1, 0);
+  layout->addWidget(quit_button_, 0, 1);
   connect(quit_button_, &QPushButton::clicked, this,
           &MainWindow::on_quit_button_clicked);
 
   text_ = new QTextEdit(this);
   // text_->setReadOnly(true);
-  layout->addWidget(text_, 0, 1);
+  layout->addWidget(text_, 1, 0, 1, 2);
 
   image_viewer_ = new QProcess(this);
   image_viewer_->start("./imagewindow", arguments);

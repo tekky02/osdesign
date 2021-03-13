@@ -5,15 +5,15 @@
 #ifndef __QTVIEWER_TIMEWINDOW_HH__
 #define __QTVIEWER_TIMEWINDOW_HH__
 
-#include <QWidget>
 #include <QSharedMemory>
 #include <QTextEdit>
+#include <QWidget>
 
 class TimeWindow : public QWidget {
   Q_OBJECT
 
 public:
-  explicit TimeWindow(QWidget * parent = nullptr);
+  explicit TimeWindow(QWidget *parent = nullptr);
   ~TimeWindow();
 
 private slots:

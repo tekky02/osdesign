@@ -6,11 +6,11 @@
 #define __QTVIEWER_MAINWINDOW_HH__
 
 #include <QMainWindow>
-#include <QWidget>
 #include <QProcess>
 #include <QPushButton>
 #include <QSharedMemory>
 #include <QTextEdit>
+#include <QWidget>
 
 class MainWindow : public QWidget {
   Q_OBJECT

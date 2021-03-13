@@ -5,19 +5,18 @@
 #ifndef __QTVIEWER_IMAGEWINDOW_HH__
 #define __QTVIEWER_IMAGEWINDOW_HH__
 
-#include <QWidget>
 #include <QTextEdit>
+#include <QWidget>
 
 class ImageWindow : public QWidget {
   Q_OBJECT
 
 public:
-  explicit ImageWindow(QWidget* parent = nullptr);
+  explicit ImageWindow(QWidget *parent = nullptr);
   ~ImageWindow();
 
 private slots:
   void show_image() noexcept;
-
 };
 
 #endif // _QTVIEWER_IMAGEWINDOW_HH__
