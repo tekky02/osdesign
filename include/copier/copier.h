@@ -1,11 +1,12 @@
 // file copier.h.
 // created by tekky on 2021.1.27.
-// © tekky all rights reserved.
+// Copyright © 2021 tekky. All rights reserved.
 
 #ifndef __COPIER_H__
 #define __COPIER_H__
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <sys/stat.h>
 
 #define BUFSIZE 1024U

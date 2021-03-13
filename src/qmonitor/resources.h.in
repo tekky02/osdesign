@@ -1,0 +1,14 @@
+#ifndef __QMONITOR_RESOURCES_H_IN__
+#define __QMONITOR_RESOURCES_H_IN__
+
+// Auto-generated file
+// DO NOT EDIT!
+
+namespace tk {
+namespace resources {
+constexpr char About[] = R"(${Resources_AuthorInfo})";
+// constexpr char Help[] = R"(${Resources_MainWindow_Help})";
+}
+}
+
+#endif // __QMONITOR_RESOURCES_H_IN__

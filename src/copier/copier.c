@@ -1,6 +1,8 @@
 // file copier.c.
 // created by tekky on 2021.1.27.
-// © tekky all rights reserved.
+// Copyright © 2021 tekky. All rights reserved.
+
+#include "copier/copier.h"
 
 #include <dirent.h>
 #include <errno.h>
@@ -9,8 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include "copier/copier.h"
 
 static bool is_directory(const char *file) {
   struct stat st;

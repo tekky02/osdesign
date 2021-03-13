@@ -7,12 +7,22 @@ endif()
 project(osdesign VERSION 0.1 LANGUAGES C CXX)
 
 option(BUILD_COPIER CACHE ON)
+option(BUILD_QTVIEWER CACHE OFF)
+option(BUILD_QMONITOR CACHE OFF)
 option(BUILD_UNIT_TEST CACHE OFF)
 
 include(GNUInstallDirs)
 
 if(BUILD_COPIER)
   add_subdirectory(src/copier)
+endif()
+
+if(BUILD_QTVIEWER)
+  add_subdirectory(src/qtviewer)
+endif()
+
+if(BUILD_QMONITOR)
+  add_subdirectory(src/qmonitor)
 endif()
 
 if(BUILD_UNIT_TEST)

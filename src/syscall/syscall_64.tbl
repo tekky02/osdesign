@@ -1,0 +1,4 @@
+// created by tekky on 2021.2.18.
+// arch/x86/../syscall_64.tbl.
+333 64 hello_world sys_hello_world
+334 64 copy_file   sys_copy_file
