@@ -100,7 +100,8 @@ void arg_check(int argc, const char *argv[]) {
         }
       }
     } else {
-      fprintf(stderr, "%s: target '%s' is not a directory.\n", argv[argc - 1]);
+      fprintf(stderr, "%s: target '%s' is not a directory.\n", argv[0],
+              argv[argc - 1]);
       exit(EXIT_FAILURE);
     }
   }
@@ -117,7 +118,9 @@ void copy_content(const char *src, const char *dest) {
   char buffer[BUFSIZE];
   size_t n = 0;
   while ((n = read(srcfd, buffer, BUFSIZE)) > 0) {
-    write(destfd, buffer, n);
+    if (write(destfd, buffer, n) < 0) {
+      perror("error: ");
+    }
   }
   close(srcfd);
   close(destfd);
