@@ -4,15 +4,14 @@
 
 #include "qmonitor/system.hh"
 
-#include <QBuffer>
-#include <QDebug>
-#include <QGridLayout>
-#include <QLabel>
-#include <QTextStream>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include <QBuffer>
+#include <QGridLayout>
+#include <QLabel>
 
 #include "qmonitor/utils.hpp"
 
@@ -23,6 +22,10 @@ SystemInfo::SystemInfo(QWidget *parent)
 }
 
 SystemInfo::~SystemInfo() {}
+
+std::size_t SystemInfo::processor_count() const {
+  return basic_info_->processor_count;
+}
 
 void SystemInfo::display_information() noexcept {
   auto layout = new QGridLayout(this);
@@ -43,7 +46,6 @@ void SystemInfo::display_information() noexcept {
 }
 
 void SystemInfo::parse_info_from_proc() {
-  std::cout << "parse_info_from_proc\n";
 
   // regex expression to get prosessor numbers.
   auto cpu_count = utils::exec("grep ^processor /proc/cpuinfo | wc -l");
@@ -66,14 +68,6 @@ void SystemInfo::parse_info_from_proc() {
   basic_info_->host_name = utils::exec("cat /proc/sys/kernel/hostname");
 
   int seconds = std::stoi(utils::exec("cat /proc/uptime | cut -d ' ' -f 1"));
-
-  basic_info_->uptime = QTime{0, 0, seconds};
-
-  qDebug() << "h: " << seconds / 3600 << "m: " << (seconds % 3600) / 60
-           << "s: " << (seconds % (3600 * 60)) << "\n";
-
-  qDebug() << "seconds: " << seconds
-           << "time: " << basic_info_->uptime.toString("h:m:s") << "\n";
 
 #ifdef DEBUG
   std::ofstream fout;

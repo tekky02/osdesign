@@ -5,8 +5,9 @@
 #ifndef __QMONITOR_SYSTEM_HH__
 #define __QMONITOR_SYSTEM_HH__
 
-#include <QWidget>
 #include <memory>
+
+#include <QWidget>
 
 #include "qmonitor/basic.hh"
 
@@ -16,13 +17,14 @@ class SystemInfo : public QWidget {
 public:
   explicit SystemInfo(QWidget *parent = nullptr);
   ~SystemInfo();
+  std::size_t processor_count() const;
 
 private:
   void parse_info_from_proc(); // load information from /proc
   void display_information() noexcept;
 
 private:
-  std::unique_ptr<BasicInfo> basic_info_;
+  std::shared_ptr<BasicInfo> basic_info_;
 };
 
 #endif // __QMONITOR_SYSTEM_HH__

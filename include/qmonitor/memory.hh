@@ -1,6 +1,6 @@
+// memory.hh.
 // created by tekky on 2021.2.20.
 // Copyright © 2021 tekky. All rights reserved.
-// memory.hh.
 
 #ifndef __QMONITOR_MEMORY_HH__
 #define __QMONITOR_MEMORY_HH__
@@ -9,6 +9,7 @@
 
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QtCharts/QPieSeries>
 
 #include "qmonitor/basic.hh"
 
@@ -28,7 +29,7 @@ private slots:
 
 private:
   std::unique_ptr<MemoryInfo> memory_info_;
-  QVBoxLayout *layout_;
+  std::unique_ptr<QtCharts::QPieSeries> p_series_;
 };
 
 #endif // __QMONITOR_MEMORY_HH__
