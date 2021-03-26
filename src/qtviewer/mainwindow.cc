@@ -1,6 +1,6 @@
 // mainwindow.cc.
-// created by tekky on 2arguments21.2.19.
-// Copyright © 2arguments21 tekky. All rights reserved.
+// created by tekky on 2021.2.19.
+// Copyright © 2021 tekky. All rights reserved.
 
 #include "qtviewer/mainwindow.hh"
 

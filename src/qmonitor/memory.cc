@@ -4,20 +4,20 @@
 
 #include "qmonitor/memory.hh"
 
-#include <QDebug>
-#include <QTimer>
+#include <fstream>
+
+#include <QColor>
 #include <QVBoxLayout>
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
-#include <fstream>
 
 using namespace QtCharts;
 
 MemoryStatus::MemoryStatus(QWidget *parent)
-    : QWidget{parent}, memory_info_{new MemoryInfo} {
+    : QWidget{parent}, memory_info_{new MemoryInfo}, p_series_{new QPieSeries} {
 
-  //   layout_ = new QVBoxLayout(this);
+  display_memory_status();
   on_data_updated();
 }
 
@@ -28,69 +28,61 @@ void MemoryStatus::memory_status_update() {
   fin.open("/proc/meminfo");
   std::string mem_total;
   std::string mem_free;
+  std::string mem_avi;
 
   std::getline(fin, mem_total);
   std::getline(fin, mem_free);
+  std::getline(fin, mem_avi);
   fin.close();
 
   for (int i = 0; i < mem_total.size(); i++) {
     if (std::isdigit(mem_total[i])) {
       memory_info_->memory_size =
           std::stoi(mem_total.substr(i, mem_total.size() - i - 3));
+      break;
     }
   }
 
-  for (int i = 0; i < mem_free.size(); i++) {
-    if (std::isdigit(mem_free[i])) {
+  for (int i = 0; i < mem_avi.size(); i++) {
+    if (std::isdigit(mem_avi[i])) {
       memory_info_->memory_free =
-          std::stoi(mem_free.substr(i, mem_free.size() - i - 3));
+          std::stoi(mem_avi.substr(i, mem_avi.size() - i - 3));
+      break;
     }
   }
-  //   QStringList list = QString(mem_total.c_str()).split(" ");
-  //   qDebug() << "list size = " << list.size();
+
+  memory_info_->memory_used =
+      memory_info_->memory_size - memory_info_->memory_free;
 }
 
 void MemoryStatus::display_memory_status() {
-  QPieSeries *series = new QPieSeries();
-  series->append("Total Memory", memory_info_->memory_size);
-  series->append("Memory Used",
-                 memory_info_->memory_size - memory_info_->memory_free);
-  //![1]
+  p_series_->append("Memory Free", memory_info_->memory_free);
+  p_series_->append("Memory Used", memory_info_->memory_used);
 
-  //![2]
-  QPieSlice *slice = series->slices().at(1);
+  auto slice = p_series_->slices().at(1);
   slice->setExploded();
   slice->setLabelVisible(true);
-  slice->setPen(QPen(Qt::darkGreen, 2));
-  slice->setBrush(Qt::green);
+  slice->setBrush(QColor(57, 197, 187));
 
-  auto slice_use = series->slices().at(0);
-  slice->setLabelVisible(true);
-  //![2]
+  auto slice_free = p_series_->slices().at(0);
+  slice_free->setLabelVisible(true);
+  slice_free->setBrush(QColor(255, 165, 0));
 
-  //![3]
   QChart *chart = new QChart();
-  chart->addSeries(series);
+  chart->addSeries(p_series_.get());
   chart->setTitle("Memory Utilization");
   chart->legend()->hide();
-  //![3]
 
-  //![4]
   QChartView *chartView = new QChartView(chart);
   chartView->setRenderHint(QPainter::Antialiasing);
-  //![4]
-  auto layout = new QVBoxLayout();
+
+  auto layout = new QVBoxLayout(this);
   layout->addWidget(chartView);
-  //   if (layout() != nullptr) {
-  //     auto old = layout();
-  //     auto item = old->takeAt(0);
-  //     old->removeItem(item);
-  //     delete old;
-  //   }
-  setLayout(layout);
 }
 
 void MemoryStatus::on_data_updated() {
   memory_status_update();
-  display_memory_status();
+
+  p_series_->slices().at(0)->setValue(memory_info_->memory_free);
+  p_series_->slices().at(1)->setValue(memory_info_->memory_used);
 }

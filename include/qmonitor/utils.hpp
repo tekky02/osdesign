@@ -1,5 +1,6 @@
 // utils.hpp.
 // created by tekky on 2021.3.8.
+// Copyright © 2021 tekky. All rights reserved.
 
 #ifndef __QMONITOR_UTILS_HPP__
 #define __QMONITOR_UTILS_HPP__
